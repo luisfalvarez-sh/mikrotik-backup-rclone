@@ -3,8 +3,10 @@ services:
     image: rclone/rclone:latest
     container_name: mikrotik-backup
     restart: unless-stopped
+    environment:
+      - TZ=America/Guatemala
     volumes:
-      - ./config/rclone.conf:/config/rclone/rclone.conf
+      - ./config:/config/rclone
       - ./.ssh:/app/.ssh:ro
       - ./scripts/backup.sh:/app/backup.sh:ro
       - ./temp_backups:/backups
@@ -12,6 +14,6 @@ services:
     command:
       - -c
       - |
-        apk add --no-cache openssh-client
-        echo "0 3 * * * sh /app/backup.sh >> /var/log/backup.log 2>&1" > /etc/crontabs/root
+        apk add --no-cache openssh-client tzdata && \
+        echo "0 3 * * * sh /app/backup.sh >> /var/log/backup.log 2>&1" > /etc/crontabs/root && \
         exec crond -f -l 2
