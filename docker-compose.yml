@@ -3,9 +3,12 @@ services:
     image: rclone/rclone:latest
     container_name: mikrotik-backup
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       - TZ=America/Guatemala
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./config:/config/rclone
       - ./.ssh:/app/.ssh:ro
       - ./scripts/backup.sh:/app/backup.sh:ro

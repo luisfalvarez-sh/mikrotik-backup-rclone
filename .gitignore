@@ -4,3 +4,4 @@ temp_backups/
 *.backup
 *.rsc
 *.log
+.env
