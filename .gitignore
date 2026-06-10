@@ -1,0 +1,12 @@
+# Ignorar secretos y configuraciones locales
+config/rclone.conf
+.ssh/
+drive-sa.json
+
+# Ignorar archivos temporales de respaldos
+temp_backups/
+*.backup
+*.rsc
+
+# Ignorar logs locales
+*.log
